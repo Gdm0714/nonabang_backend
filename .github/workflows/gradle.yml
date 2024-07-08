@@ -51,11 +51,14 @@ jobs:
         run: sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nonabang
 
       - name: docker stop container
-        run: sudo docker stop $(sudo docker ps -q) 2>/dev/null || true
+        run: sudo docker stop nonabang-app || true
+        
+      - name: docker remove old container
+        run: sudo docker rm nonabang-app || true
 
       - name: docker run new container
         run: sudo docker run --name nonabang-app --rm -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/nonabang
 
-      - name: delete old docker image
-        run: sudo docker system prune -f
+      - name: delete old docker images
+        run: sudo docker image prune -a -f --filter "until=24h"
         
