@@ -54,7 +54,7 @@ jobs:
         run: sudo docker stop $(sudo docker ps -q) 2>/dev/null || true
 
       - name: docker run new container
-        run: sudo docker run --name github-actions-test --rm -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/nonabang
+        run: sudo docker run --name nonabang-app --rm -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/nonabang
 
       - name: delete old docker image
         run: sudo docker system prune -f
