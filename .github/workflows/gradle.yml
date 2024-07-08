@@ -10,10 +10,22 @@ permissions:
   contents: read
 
 jobs:
-  build-docker-image:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+
+    - name: 디렉토리 내용 확인
+      run: ls -la
+
+    - name: Gradle 래퍼 확인
+      run: |
+        if [ -f "./gradlew" ]; then
+          echo "gradlew 파일이 존재합니다."
+        else
+          echo "gradlew 파일이 없습니다. 현재 디렉토리 내용:"
+          ls -la
+        fi
 
     - name: Gradle 래퍼에 실행 권한 설정
       run: chmod +x ./gradlew
@@ -25,18 +37,6 @@ jobs:
         distribution: 'temurin'
 
     - name: Gradle로 빌드
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-      with:
-        arguments: clean bootJar
+      run: ./gradlew clean bootJar
 
-    - name: 도커 이미지 빌드
-      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/nonabang .
-
-    - name: 도커 로그인
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-    - name: 도커 허브에 푸시
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/nonabang
+    # ... (나머지 도커 관련 단계들)
