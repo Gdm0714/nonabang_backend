@@ -8,7 +8,6 @@ import inje.nonabang.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
 import java.util.Optional;
 
 @Service
