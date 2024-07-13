@@ -1,7 +1,10 @@
 package inje.nonabang.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import inje.nonabang.dto.MemberDTO;
+import inje.nonabang.enumSet.MemberRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,6 +52,14 @@ public class Member { //table 역할
 
 
     public static Member toMemberEntity(MemberDTO memberDTO , Authority authority, PasswordEncoder passwordEncoder){
+=======
+    private MemberRole role;
+
+    private String provider;
+
+    private String providerId;
+
+    public static Member toMemberEntity(MemberDTO memberDTO){
         return Member.builder()
                 .authorities(Collections.singleton(authority))
                 .memberNumber(memberDTO.getMemberNumber())

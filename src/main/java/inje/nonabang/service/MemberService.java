@@ -1,7 +1,6 @@
 package inje.nonabang.service;
 
 
-import inje.nonabang.dto.LoginRequest;
 import inje.nonabang.dto.MemberDTO;
 import inje.nonabang.entity.Authority;
 import inje.nonabang.entity.Member;
@@ -12,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor // controller와 같이 final 멤버변수 생성자 만드는 역할

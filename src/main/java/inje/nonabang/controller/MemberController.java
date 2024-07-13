@@ -1,7 +1,5 @@
 package inje.nonabang.controller;
 
-import inje.nonabang.dto.ApiResponse;
-import inje.nonabang.dto.LoginRequest;
 import inje.nonabang.dto.MemberDTO;
 import inje.nonabang.entity.Member;
 import inje.nonabang.service.MemberService;
@@ -15,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class MemberController {
 
-    private final MemberService memberService;
+  private final MemberService memberService;
 
 
     @GetMapping("/member/save")
-    public String saveForm() {
+    public String saveForm(){
         return "save";
     }
 
@@ -27,9 +25,6 @@ public class MemberController {
 
     @PostMapping("/member/save")
     public void save(@RequestBody MemberDTO memberDTO) {
-
-
-
         memberService.save(memberDTO);
     }
 
@@ -52,7 +47,6 @@ public class MemberController {
     public ResponseEntity<Member> getUserInfo(@PathVariable String username) {
         return ResponseEntity.ok(memberService.getUserWithAuthorities(username).get());
     }
-
 
 
 }
