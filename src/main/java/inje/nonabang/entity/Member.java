@@ -1,6 +1,7 @@
 package inje.nonabang.entity;
 import inje.nonabang.dto.MemberDTO;
 import inje.nonabang.enumSet.MemberRole;
+import inje.nonabang.enumSet.SocialType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +11,7 @@ import lombok.*;
 @Table(name = "member_table")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member { //table 역할
+public class Member extends BaseEntity{ //table 역할
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto_increment
@@ -28,11 +29,21 @@ public class Member { //table 역할
     @Column
     private String memberNumber;
 
+    @Enumerated(EnumType.STRING)
     private MemberRole role;
 
     private String provider;
 
     private String providerId;
+
+    private String imageUrl;
+
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType;
+
+    private String socialId;
+
+    private String refreshToken;
 
     public static Member toMemberEntity(MemberDTO memberDTO){
         return Member.builder()
@@ -41,6 +52,11 @@ public class Member { //table 역할
                 .memberName(memberDTO.getMemberName())
                 .memberEmail(memberDTO.getMemberEmail())
                 .build();
+    }
+
+    public Member updateRefreshToken(String refreshToken){
+        this.refreshToken = refreshToken;
+        return this;
     }
 
 }
