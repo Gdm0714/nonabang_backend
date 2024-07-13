@@ -1,3 +1,5 @@
+application-oauth2.properties
+
 HELP.md
 .gradle
 build/
