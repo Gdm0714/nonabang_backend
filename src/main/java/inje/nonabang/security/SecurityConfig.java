@@ -46,9 +46,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                         .accessDeniedHandler(jwtAccessDeniedHandler))
 
-                // Enable h2-console
-                .headers(headers -> headers
-                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+
 
                 // Use stateless session management
                 .sessionManagement(sessionManagement -> sessionManagement
@@ -56,11 +54,8 @@ public class SecurityConfig {
 
                 // Configure authorization rules
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/api/authenticate").permitAll()
-                        .requestMatchers("/api/signup").permitAll()
-                        .requestMatchers(PathRequest.toH2Console()).permitAll()
-                        .requestMatchers("/favicon.ico").permitAll()
-                        .anyRequest().authenticated())
+
+                        .anyRequest().permitAll())
 
                 .apply(new JwtSecurityConfig(tokenProvider)); // JwtFilter를 addFilterBefore로 등록했던 JwtSecurityConfig class 적용
 
