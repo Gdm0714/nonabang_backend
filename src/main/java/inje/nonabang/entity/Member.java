@@ -1,5 +1,6 @@
 package inje.nonabang.entity;
 import inje.nonabang.dto.MemberDTO;
+import inje.nonabang.enumSet.MemberRole;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,12 @@ public class Member { //table 역할
 
     @Column
     private String memberNumber;
+
+    private MemberRole role;
+
+    private String provider;
+
+    private String providerId;
 
     public static Member toMemberEntity(MemberDTO memberDTO){
         return Member.builder()
