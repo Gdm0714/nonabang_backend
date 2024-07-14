@@ -1,5 +1,8 @@
 package inje.nonabang.enumSet;
 
+import lombok.Getter;
+
+@Getter
 public enum SocialType {
     KAKAO("kakao"),
     GOOGLE("google");

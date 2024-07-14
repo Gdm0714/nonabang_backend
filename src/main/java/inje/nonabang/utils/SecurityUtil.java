@@ -1,6 +1,5 @@
 package inje.nonabang.utils;
 
-import org.apache.catalina.security.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -9,10 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
 
-public class CustomUserDetailsService {
-    private static final Logger logger = LoggerFactory.getLogger(SecurityUtil.class);
+public class SecurityUtil {
+    private static final Logger logger = LoggerFactory.getLogger(org.apache.catalina.security.SecurityUtil.class);
 
-    private CustomUserDetailsService() {}
+    private SecurityUtil() {}
 
     // getCurrentUsername 메소드의 역할은 Security Cont
     public static Optional<String> getCurrentUsername() {

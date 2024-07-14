@@ -27,7 +27,6 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
 
     private final MemberRepository memberRepository;
 
-    private static final String NAVER = "naver";
     private static final String KAKAO = "kakao";
 
     @Override
@@ -45,7 +44,7 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
 
         OAuthAttributes extractAttributes = OAuthAttributes.of(socialType, userNameAttributeName, attributes);
 
-        Member createdUser = getOrCreateUser(extractAttributes, socialType);
+        Member createdUser = getUser(extractAttributes, socialType);
 
         return new CustomOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(createdUser.getRole().getKey())),
@@ -56,17 +55,25 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
         );
     }
 
-    private SocialType getSocialType(String registrationId) {
-        if(KAKAO.equals(registrationId)) return SocialType.KAKAO;
-        return SocialType.GOOGLE;
+    private SocialType getSocialType(String registrationId) { // 소셜 타입을 가져오는 메소드
+        if(KAKAO.equals(registrationId)) { // 카카오인 경우
+            return SocialType.KAKAO;
+        }
+        return SocialType.GOOGLE; // 그 외의 경우는 구글로 간주
     }
 
-    private Member getOrCreateUser(OAuthAttributes attributes, SocialType socialType) {
-        return memberRepository.findBySocialTypeAndSocialId(socialType, attributes.getOAuth2UserInfo().getId())
-                .orElseGet(() -> saveUser(attributes, socialType));
+    private Member getUser(OAuthAttributes attributes, SocialType socialType) { // 사용자를 가져오는 메소드
+        Member findUser = memberRepository.findBySocialTypeAndSocialId(socialType,
+                attributes.getOAuth2UserInfo().getId()).orElse(null); // 소셜 타입과 소셜 ID로 사용자를 찾음
+
+        if(findUser == null) { // 사용자가 없는 경우
+            return saveUser(attributes, socialType); // 사용자를 저장
+        }
+        return findUser; // 사용자를 반환
     }
 
     private Member saveUser(OAuthAttributes attributes, SocialType socialType) {
+        log.info("socialType: " + socialType);
         Member createdUser = attributes.toEntity(socialType, attributes.getOAuth2UserInfo());
         return memberRepository.save(createdUser);
     }

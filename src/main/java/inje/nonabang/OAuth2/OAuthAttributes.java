@@ -13,8 +13,8 @@ import java.util.Map;
 @Getter
 public class OAuthAttributes {
 
-    private String nameAttributeKey;
-    private OAuth2UserInfo oAuth2UserInfo;
+    private final String nameAttributeKey;
+    private final OAuth2UserInfo oAuth2UserInfo;
 
     @Builder
     public OAuthAttributes(String nameAttributeKey, OAuth2UserInfo oAuth2UserInfo) {
@@ -23,8 +23,10 @@ public class OAuthAttributes {
     }
 
     public static OAuthAttributes of(SocialType socialType, String userNameAttributeName, Map<String, Object> attributes) {
-        if ("kakao".equals(SocialType.KAKAO.getKey()))
+
+        if (socialType == SocialType.KAKAO) {
             return ofKakao(userNameAttributeName, attributes);
+        }
         return ofGoogle(userNameAttributeName, attributes);
     }
 
@@ -48,6 +50,7 @@ public class OAuthAttributes {
                 .memberName(oAuth2UserInfo.getNickname())
                 .imageUrl(oAuth2UserInfo.getImageUrl())
                 .socialType(socialType)
+                .socialId(oAuth2UserInfo.getId())
                 .role(MemberRole.GUEST)
                 .build();
     }
