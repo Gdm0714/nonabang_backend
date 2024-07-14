@@ -1,4 +1,4 @@
-package inje.nonabang.common;
+package inje.nonabang.enumSet;
 
 
 public enum ApiStatus {
