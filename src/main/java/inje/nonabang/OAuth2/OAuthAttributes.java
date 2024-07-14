@@ -24,8 +24,9 @@ public class OAuthAttributes {
 
     public static OAuthAttributes of(SocialType socialType, String userNameAttributeName, Map<String, Object> attributes) {
 
-        if (socialType == SocialType.KAKAO) {
-            return ofKakao(userNameAttributeName, attributes);
+        if (socialType == SocialType.NAVER) {
+
+            return ofNaver(userNameAttributeName, attributes);
         }
         return ofGoogle(userNameAttributeName, attributes);
     }
@@ -37,10 +38,10 @@ public class OAuthAttributes {
                 .build();
     }
 
-    public static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
+    public static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
         return OAuthAttributes.builder()
                 .nameAttributeKey(userNameAttributeName)
-                .oAuth2UserInfo(OAuth2UserInfo.ofKakao(attributes))
+                .oAuth2UserInfo(OAuth2UserInfo.ofNaver(attributes))
                 .build();
     }
 

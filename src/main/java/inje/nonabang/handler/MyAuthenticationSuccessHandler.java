@@ -2,7 +2,9 @@ package inje.nonabang.handler;
 
 
 import inje.nonabang.OAuth2.CustomOAuth2User;
+import inje.nonabang.entity.Member;
 import inje.nonabang.enumSet.MemberRole;
+import inje.nonabang.repository.MemberRepository;
 import inje.nonabang.service.JwtService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtService jwtService;
+    private final MemberRepository memberRepository;
 
 
     @Override
@@ -35,9 +38,9 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
                 response.sendRedirect("oauth2/sign-up"); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
 
                 jwtService.sendAccessAndRefreshToken(response, accessToken, null);
-                //Member findUser = memberRepository.findByEmail(oAuth2User.getEmail())
-                //                .orElseThrow(() -> new IllegalArgumentException("이메일에 해당하는 유저가 없습니다."));
-                //findUser.authorizeUser();
+                Member findUser = memberRepository.findByMemberEmail(oAuth2User.getEmail())
+                        .orElseThrow(() -> new IllegalArgumentException("이메일에 해당하는 유저가 없습니다."));
+                findUser.authorizeUser();
             } else {
                 loginSuccess(response, oAuth2User); // 로그인에 성공한 경우 access, refresh 토큰 생성
             }

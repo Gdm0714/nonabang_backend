@@ -27,7 +27,7 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
 
     private final MemberRepository memberRepository;
 
-    private static final String KAKAO = "kakao";
+    private static final String NAVER = "naver";
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -35,13 +35,12 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
 
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
-
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         SocialType socialType = getSocialType(registrationId);
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         Map<String, Object> attributes = oAuth2User.getAttributes();
-
+        log.info("attributes : " + attributes);
         OAuthAttributes extractAttributes = OAuthAttributes.of(socialType, userNameAttributeName, attributes);
 
         Member createdUser = getUser(extractAttributes, socialType);
@@ -56,8 +55,8 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
     }
 
     private SocialType getSocialType(String registrationId) { // 소셜 타입을 가져오는 메소드
-        if(KAKAO.equals(registrationId)) { // 카카오인 경우
-            return SocialType.KAKAO;
+        if(NAVER.equals(registrationId)) { // 네이버인 경우
+            return SocialType.NAVER;
         }
         return SocialType.GOOGLE; // 그 외의 경우는 구글로 간주
     }
@@ -73,7 +72,6 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
     }
 
     private Member saveUser(OAuthAttributes attributes, SocialType socialType) {
-        log.info("socialType: " + socialType);
         Member createdUser = attributes.toEntity(socialType, attributes.getOAuth2UserInfo());
         return memberRepository.save(createdUser);
     }

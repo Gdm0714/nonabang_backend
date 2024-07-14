@@ -37,10 +37,6 @@ public class Member extends BaseEntity{ //table 역할
     @Enumerated(EnumType.STRING)
     private MemberRole role;
 
-    private String provider;
-
-    private String providerId;
-
     @JsonIgnore
     @Column(name = "activated")
     private boolean activated;
@@ -74,6 +70,10 @@ public class Member extends BaseEntity{ //table 역할
     public Member updateRefreshToken(String refreshToken){
         this.refreshToken = refreshToken;
         return this;
+    }
+
+    public void authorizeUser() {
+        this.role = MemberRole.USER;
     }
 
 }

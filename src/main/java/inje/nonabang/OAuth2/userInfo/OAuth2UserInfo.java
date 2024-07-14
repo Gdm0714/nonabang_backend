@@ -22,7 +22,7 @@ public abstract class OAuth2UserInfo {
         return new GoogleOAuth2UserInfo(attributes);
     }
 
-    public static OAuth2UserInfo ofKakao(Map<String, Object> attributes) {
-        return new KakaoOAuth2UserInfo(attributes);
+    public static OAuth2UserInfo ofNaver(Map<String, Object> attributes) {
+        return new NaverOAuth2UserInfo(attributes);
     }
 }
