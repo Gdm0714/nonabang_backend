@@ -14,6 +14,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Create application properties file from secrets
+      run: |
+        echo "jwt.expirationHours=${{ secrets.JWT_EXPIRATION_HOURS }}" >> src/main/resources/application.properties
+        echo "jwt.issuer=${{ secrets.JWT_ISSUER }}" >> src/main/resources/application.properties
+        echo "jwt.access.expiration=${{ secrets.JWT_ACCESS_EXPIRATION }}" >> src/main/resources/application.properties
+        echo "jwt.access.header=${{ secrets.JWT_ACCESS_HEADER }}" >> src/main/resources/application.properties
+        echo "jwt.refresh.expiration=${{ secrets.JWT_REFRESH_EXPIRATION }}" >> src/main/resources/application.properties
+        echo "jwt.refresh.header=${{ secrets.JWT_REFRESH_HEADER }}" >> src/main/resources/application.properties
+        echo "jwt.secret=${{ secrets.JWT_SECRET }}" >> src/main/resources/application.properties
+        echo "jwt.token-validity-in-seconds=${{ secrets.JWT_TOKEN_VALIDITY_IN_SECONDS }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.registration.google.client-id=${{ secrets.GOOGLE_CLIENT_ID }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.registration.google.client-secret=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.registration.google.scope=${{ secrets.GOOGLE_SCOPE }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.registration.google.redirect-uri=${{ secrets.GOOGLE_REDIRECT_URI }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.registration.google.client-name=${{ secrets.GOOGLE_CLIENT_NAME }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.registration.google.authorization-grant-type=${{ secrets.GOOGLE_AUTHORIZATION_GRANT_TYPE }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.registration.naver.client-id=${{ secrets.NAVER_CLIENT_ID }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.registration.naver.client-secret=${{ secrets.NAVER_CLIENT_SECRET }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.registration.naver.scope=${{ secrets.NAVER_SCOPE }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.registration.naver.redirect-uri=${{ secrets.NAVER_REDIRECT_URI }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.registration.naver.client-name=${{ secrets.NAVER_CLIENT_NAME }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.registration.naver.authorization-grant-type=${{ secrets.NAVER_AUTHORIZATION_GRANT_TYPE }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.provider.naver.authorization-uri=${{ secrets.NAVER_AUTHORIZATION_URI }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.provider.naver.token-uri=${{ secrets.NAVER_TOKEN_URI }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.provider.naver.user-info-uri=${{ secrets.NAVER_USER_INFO_URI }}" >> src/main/resources/application.properties
+        echo "spring.security.oauth2.client.provider.naver.user-name-attribute=${{ secrets.NAVER_USER_NAME_ATTRIBUTE }}" >> src/main/resources/application.properties
 
     - name: Gradle 래퍼에 실행 권한 설정
       run: chmod +x ./gradlew
@@ -46,13 +75,12 @@ jobs:
     runs-on: self-hosted
 
     steps:
-
       - name: docker pull
         run: sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nonabang
 
       - name: docker stop container
         run: sudo docker stop nonabang-app || true
-        
+
       - name: docker remove old container
         run: sudo docker rm nonabang-app || true
 
@@ -61,4 +89,3 @@ jobs:
 
       - name: delete old docker images
         run: sudo docker image prune -a -f --filter "until=24h"
-        
