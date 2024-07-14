@@ -1,7 +1,7 @@
 package inje.nonabang.dto;
 
 
-import inje.nonabang.common.ApiStatus;
+import inje.nonabang.enumSet.ApiStatus;
 
 public record ApiResponse(
         ApiStatus status,
