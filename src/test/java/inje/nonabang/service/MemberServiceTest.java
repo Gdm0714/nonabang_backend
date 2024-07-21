@@ -42,7 +42,6 @@ class MemberServiceTest {
 
     @Test
     void testSave() {
-        // Given
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setMemberEmail("test@example.com");
         memberDTO.setMemberPassword("password");

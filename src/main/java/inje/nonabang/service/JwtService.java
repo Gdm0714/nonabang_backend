@@ -14,25 +14,25 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.Optional;
 
-@Service // 스프링에서 이 클래스를 서비스로 인식하게 하는 어노테이션
-@RequiredArgsConstructor // final이나 @NonNull인 필드들만 파라미터로 받는 생성자를 생성하는 lombok 어노테이션
-@Getter // 모든 필드에 대한 getter를 생성하는 lombok 어노테이션
-@Slf4j // 로깅을 위한 Slf4j 로거를 생성하는 lombok 어노테이션
+@Service
+@RequiredArgsConstructor
+@Getter
+@Slf4j
 public class JwtService {
 
-    @Value("${jwt.secret}") // application.properties 파일에서 jwt.secretKey 값을 가져와서 변수에 할당
+    @Value("${jwt.secret}")
     private String secretKey;
 
-    @Value("${jwt.access.expiration}") // application.properties 파일에서 jwt.access.expiration 값을 가져와서 변수에 할당
+    @Value("${jwt.access.expiration}")
     private Long accessTokenExpirationPeriod;
 
-    @Value("${jwt.refresh.expiration}") // application.properties 파일에서 jwt.refresh.expiration 값을 가져와서 변수에 할당
+    @Value("${jwt.refresh.expiration}")
     private Long refreshTokenExpirationPeriod;
 
-    @Value("${jwt.access.header}") // application.properties 파일에서 jwt.access.header 값을 가져와서 변수에 할당
+    @Value("${jwt.access.header}")
     private String accessHeader;
 
-    @Value("${jwt.refresh.header}") // application.properties 파일에서 jwt.refresh.header 값을 가져와서 변수에 할당
+    @Value("${jwt.refresh.header}")
     private String refreshHeader;
 
     private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
