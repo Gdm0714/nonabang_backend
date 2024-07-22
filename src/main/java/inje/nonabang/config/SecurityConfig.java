@@ -1,21 +1,18 @@
-package inje.nonabang.security;
+package inje.nonabang.config;
 
 import inje.nonabang.handler.MyAuthenticationFailureHandler;
 import inje.nonabang.handler.MyAuthenticationSuccessHandler;
 import inje.nonabang.jwt.JwtAccessDeniedHandler;
 import inje.nonabang.jwt.JwtAuthenticationEntryPoint;
 import inje.nonabang.jwt.JwtSecurityConfig;
-
 import inje.nonabang.jwt.TokenProvider;
 import inje.nonabang.service.OAuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -77,4 +74,6 @@ public class SecurityConfig {
 
 
     }
+
+
 }

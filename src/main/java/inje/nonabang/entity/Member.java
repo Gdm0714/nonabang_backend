@@ -34,6 +34,7 @@ public class Member extends BaseEntity{ //table 역할
     @Column
     private String memberNumber;
 
+
     @Enumerated(EnumType.STRING)
     private MemberRole role;
 
@@ -47,6 +48,9 @@ public class Member extends BaseEntity{ //table 역할
 
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
+
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
+    private Image image;
 
     private String socialId;
 

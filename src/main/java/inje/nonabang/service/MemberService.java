@@ -4,8 +4,10 @@ package inje.nonabang.service;
 import inje.nonabang.dto.LoginRequest;
 import inje.nonabang.dto.MemberDTO;
 import inje.nonabang.entity.Authority;
+import inje.nonabang.entity.Image;
 import inje.nonabang.entity.Member;
 import inje.nonabang.repository.AuthorityRepository;
+import inje.nonabang.repository.ImageRepository;
 import inje.nonabang.repository.MemberRepository;
 import inje.nonabang.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +25,11 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ImageRepository imageRepository;
 
+
+
+    @Transactional
     public void save(MemberDTO memberDTO){
         //repository save 메서드 호출
 
@@ -33,9 +39,15 @@ public class MemberService {
 
         authorityRepository.save(authority);
 
-
         Member memberEntity = Member.toMemberEntity(memberDTO,authority, passwordEncoder);
         memberRepository.save(memberEntity);
+        Image image = Image.builder()
+                .url("/profileImages/anonyomus.png")
+                .member(new Member())
+                .build();
+
+
+        imageRepository.save(image);
     }
 
     public MemberDTO login(LoginRequest memberDTO){
@@ -70,5 +82,5 @@ public class MemberService {
         return SecurityUtil.getCurrentUsername()
                 .flatMap(memberRepository::findOneWithAuthoritiesByMemberName);
 
-  }
+    }
 }

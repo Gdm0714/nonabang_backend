@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class MemberController {
 
-  private final MemberService memberService;
+    private final MemberService memberService;
 
 
     @GetMapping("/member/save")
     public String saveForm(){
         return "save";
     }
-
 
 
     @PostMapping("/member/save")
@@ -41,6 +40,7 @@ public class MemberController {
     @GetMapping("/user")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<Member> getMyUserInfo() {
+
         return ResponseEntity.ok(memberService.getMyUserWithAuthorities().get());
     }
 
