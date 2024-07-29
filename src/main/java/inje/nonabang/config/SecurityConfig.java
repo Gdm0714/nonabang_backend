@@ -1,4 +1,4 @@
-package inje.nonabang.security;
+package inje.nonabang.config;
 
 import inje.nonabang.handler.MyAuthenticationFailureHandler;
 import inje.nonabang.handler.MyAuthenticationSuccessHandler;
